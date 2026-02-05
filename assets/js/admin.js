@@ -122,12 +122,92 @@
                 elements.currentFile.textContent = `${page}.md`;
                 hasUnsavedChanges = false;
                 updateSaveStatus('');
+
+                // Also load title and description
+                await loadTitle(page);
+                await loadDescription(page);
             } else {
                 showError('Failed to load content');
             }
         } catch (error) {
             console.error('Load error:', error);
             showError('Could not load content. Server might be offline.');
+        }
+    }
+
+    async function loadDescription(page) {
+        try {
+            const descInput = document.getElementById('page-description');
+            if (!descInput) return;
+
+            const response = await fetch(`${API_BASE}/description/${page}`);
+            const data = await response.json();
+
+            if (data.success) {
+                descInput.value = data.description;
+            } else {
+                descInput.value = '';
+            }
+        } catch (error) {
+            console.error('Load description error:', error);
+        }
+    }
+
+    async function saveDescription() {
+        const descInput = document.getElementById('page-description');
+        if (!descInput) return;
+
+        try {
+            await fetch(`${API_BASE}/description/${currentPage}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    description: descInput.value,
+                    sessionId: sessionId
+                })
+            });
+        } catch (error) {
+            console.error('Save description error:', error);
+        }
+    }
+
+    async function loadTitle(page) {
+        try {
+            const titleInput = document.getElementById('page-title');
+            if (!titleInput) return;
+
+            const response = await fetch(`${API_BASE}/title/${page}`);
+            const data = await response.json();
+
+            if (data.success) {
+                titleInput.value = data.title;
+            } else {
+                titleInput.value = '';
+            }
+        } catch (error) {
+            console.error('Load title error:', error);
+        }
+    }
+
+    async function saveTitle() {
+        const titleInput = document.getElementById('page-title');
+        if (!titleInput) return;
+
+        try {
+            await fetch(`${API_BASE}/title/${currentPage}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    title: titleInput.value,
+                    sessionId: sessionId
+                })
+            });
+        } catch (error) {
+            console.error('Save title error:', error);
         }
     }
 
@@ -157,6 +237,11 @@
             if (data.success) {
                 elements.preview.innerHTML = data.html;
                 hasUnsavedChanges = false;
+
+                // Also save title and description
+                await saveTitle();
+                await saveDescription();
+
                 updateSaveStatus('✓ Saved!');
                 setConnectionStatus('connected');
 
@@ -178,12 +263,10 @@
         }
     }
 
-    // Auto-save with debounce
-    function scheduleSave() {
-        if (saveTimeout) clearTimeout(saveTimeout);
-        saveTimeout = setTimeout(saveContent, 2000);
+    // Mark as unsaved (no auto-save)
+    function markUnsaved() {
         hasUnsavedChanges = true;
-        updateSaveStatus('Unsaved changes...');
+        updateSaveStatus('⚠️ Unsaved changes');
     }
 
     // ========================================
@@ -231,7 +314,7 @@
         editor.setSelectionRange(cursorPos, cursorPos);
 
         updatePreview();
-        scheduleSave();
+        markUnsaved();
     }
 
     // ========================================
@@ -273,10 +356,10 @@
             });
         });
 
-        // Editor input
+        // Editor input - no auto-save, manual save only
         elements.editor.addEventListener('input', () => {
             updatePreview();
-            scheduleSave();
+            markUnsaved();
         });
 
         // Manual save
@@ -293,6 +376,15 @@
                 insertText(text, wrap);
             });
         });
+
+        // Preview button - open current page in new tab
+        const previewBtn = document.getElementById('preview-page-btn');
+        if (previewBtn) {
+            previewBtn.addEventListener('click', () => {
+                const pageUrl = currentPage === 'index' ? '/' : `/${currentPage}.html`;
+                window.open(pageUrl, '_blank');
+            });
+        }
 
         // Keyboard shortcuts
         document.addEventListener('keydown', (e) => {

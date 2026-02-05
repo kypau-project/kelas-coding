@@ -22,19 +22,19 @@ const sessions = new Map();
 
 // Ensure content directory exists
 async function ensureContentDir() {
-    try {
-        await fs.access(CONTENT_DIR);
-    } catch {
-        await fs.mkdir(CONTENT_DIR, { recursive: true });
-        // Create default content files
-        await createDefaultContent();
-    }
+  try {
+    await fs.access(CONTENT_DIR);
+  } catch {
+    await fs.mkdir(CONTENT_DIR, { recursive: true });
+    // Create default content files
+    await createDefaultContent();
+  }
 }
 
 // Create default markdown content files
 async function createDefaultContent() {
-    const defaultContent = {
-        'index': `## 👋 Tentang Tutorial Ini
+  const defaultContent = {
+    'index': `## 👋 Tentang Tutorial Ini
 
 Selamat datang di tutorial **Membuat Website Link Bio**! Tutorial ini dirancang khusus untuk pemula yang ingin belajar membuat website pertama mereka.
 
@@ -71,7 +71,7 @@ Tutorial ini cocok untuk pemula total. Kamu tidak perlu tahu tentang coding sebe
 
 > Siap untuk memulai? Klik **Step 1 - Persiapan** untuk memulai perjalanan coding-mu!`,
 
-        'step-1': `## 🔶 Persiapan Sebelum Memulai
+    'step-1': `## 🔶 Persiapan Sebelum Memulai
 
 Sebelum kita mulai membuat project website Link Bio, ada beberapa hal yang perlu kamu siapkan. Tenang, semuanya sederhana kok!
 
@@ -119,7 +119,7 @@ Jika kamu tidak ingin membuat akun GitHub, kamu bisa menggunakan [CodePen](https
 
 > Sudah siap? Lanjut ke **Step 2 - Struktur Dasar** untuk mulai menulis kode!`,
 
-        'step-2': `## 📦 Struktur Dasar HTML
+    'step-2': `## 📦 Struktur Dasar HTML
 
 Mari kita mulai dengan membuat struktur dasar file HTML.
 
@@ -171,7 +171,7 @@ Sekarang tambahkan container di dalam \`<body>\`:
 
 > Keren! Struktur dasar sudah siap. Lanjut ke **Step 3 - Avatar** untuk menambahkan foto profil!`,
 
-        'step-3': `## 🎨 Menambahkan Avatar
+    'step-3': `## 🎨 Menambahkan Avatar
 
 Avatar adalah foto profil yang akan ditampilkan di website-mu.
 
@@ -219,7 +219,7 @@ Untuk gambar avatar:
 
 > Avatar sudah siap! Lanjut ke **Step 4 - Nama dan Deskripsi**!`,
 
-        'step-4': `## ✏️ Nama dan Deskripsi
+    'step-4': `## ✏️ Nama dan Deskripsi
 
 Sekarang kita akan menambahkan nama dan deskripsi singkat tentang diri kamu.
 
@@ -270,7 +270,7 @@ Bio yang bagus itu:
 
 > Nama dan bio sudah ada! Lanjut ke **Step 5 - Link Sosmed**!`,
 
-        'step-5': `## 🔗 Membuat Container Link
+    'step-5': `## 🔗 Membuat Container Link
 
 Tambahkan kode ini untuk container link-link sosmed:
 
@@ -352,7 +352,7 @@ Untuk icon yang lebih profesional, gunakan SVG:
 
 > Link sudah siap! Lanjut ke **Step 6 - Deploy** untuk mempublikasikan!`,
 
-        'step-6': `## 🚀 Deploy ke GitHub Pages
+    'step-6': `## 🚀 Deploy ke GitHub Pages
 
 Sekarang saatnya membuat website-mu bisa diakses oleh semua orang!
 
@@ -406,7 +406,7 @@ Pastikan:
 
 > 🎉 Selamat! Website-mu sudah live! Lanjut ke **Penutup** untuk tips selanjutnya!`,
 
-        'penutup': `## 🎉 Selamat!
+    'penutup': `## 🎉 Selamat!
 
 Kamu telah berhasil membuat website Link Bio sendiri! Ini adalah langkah pertama yang luar biasa dalam perjalanan coding-mu.
 
@@ -460,96 +460,196 @@ Bagikan link website-mu ke teman-teman dan keluarga. Kamu layak bangga dengan ha
 ---
 
 *Terima kasih sudah mengikuti tutorial ini. Semoga sukses dalam perjalanan coding-mu!* ✨`
-    };
+  };
 
-    for (const [page, content] of Object.entries(defaultContent)) {
-        await fs.writeFile(path.join(CONTENT_DIR, `${page}.md`), content, 'utf-8');
-    }
+  for (const [page, content] of Object.entries(defaultContent)) {
+    await fs.writeFile(path.join(CONTENT_DIR, `${page}.md`), content, 'utf-8');
+  }
 }
 
 // API Routes
 
 // Get page content (Markdown)
 app.get('/api/content/:page', async (req, res) => {
-    try {
-        const { page } = req.params;
-        const filePath = path.join(CONTENT_DIR, `${page}.md`);
+  try {
+    const { page } = req.params;
+    const filePath = path.join(CONTENT_DIR, `${page}.md`);
 
-        try {
-            const markdown = await fs.readFile(filePath, 'utf-8');
-            const html = marked(markdown);
-            res.json({ success: true, markdown, html });
-        } catch {
-            res.status(404).json({ success: false, error: 'Page not found' });
-        }
-    } catch (error) {
-        res.status(500).json({ success: false, error: error.message });
+    try {
+      const markdown = await fs.readFile(filePath, 'utf-8');
+      const html = marked(markdown);
+      res.json({ success: true, markdown, html });
+    } catch {
+      res.status(404).json({ success: false, error: 'Page not found' });
     }
+  } catch (error) {
+    res.status(500).json({ success: false, error: error.message });
+  }
 });
 
 // Save page content (requires auth)
 app.put('/api/content/:page', async (req, res) => {
-    try {
-        const { page } = req.params;
-        const { markdown, sessionId } = req.body;
+  try {
+    const { page } = req.params;
+    const { markdown, sessionId } = req.body;
 
-        // Check authentication
-        if (!sessionId || !sessions.has(sessionId)) {
-            return res.status(401).json({ success: false, error: 'Unauthorized' });
-        }
-
-        const filePath = path.join(CONTENT_DIR, `${page}.md`);
-        await fs.writeFile(filePath, markdown, 'utf-8');
-
-        const html = marked(markdown);
-        res.json({ success: true, html });
-    } catch (error) {
-        res.status(500).json({ success: false, error: error.message });
+    // Check authentication
+    if (!sessionId || !sessions.has(sessionId)) {
+      return res.status(401).json({ success: false, error: 'Unauthorized' });
     }
+
+    const filePath = path.join(CONTENT_DIR, `${page}.md`);
+    await fs.writeFile(filePath, markdown, 'utf-8');
+
+    const html = marked(markdown);
+    res.json({ success: true, html });
+  } catch (error) {
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+
+// Get page description
+app.get('/api/description/:page', async (req, res) => {
+  try {
+    const { page } = req.params;
+    const filePath = path.join(__dirname, `${page}.html`);
+
+    try {
+      const htmlContent = await fs.readFile(filePath, 'utf-8');
+      // Extract description from <p class="page-description">...</p>
+      const match = htmlContent.match(/<p class="page-description">(.*?)<\/p>/s);
+      const description = match ? match[1].trim() : '';
+      res.json({ success: true, description });
+    } catch {
+      res.status(404).json({ success: false, error: 'Page not found' });
+    }
+  } catch (error) {
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+
+// Save page description (requires auth)
+app.put('/api/description/:page', async (req, res) => {
+  try {
+    const { page } = req.params;
+    const { description, sessionId } = req.body;
+
+    // Check authentication
+    if (!sessionId || !sessions.has(sessionId)) {
+      return res.status(401).json({ success: false, error: 'Unauthorized' });
+    }
+
+    const filePath = path.join(__dirname, `${page}.html`);
+
+    try {
+      let htmlContent = await fs.readFile(filePath, 'utf-8');
+      // Replace description in <p class="page-description">...</p>
+      htmlContent = htmlContent.replace(
+        /<p class="page-description">.*?<\/p>/s,
+        `<p class="page-description">${description}</p>`
+      );
+      await fs.writeFile(filePath, htmlContent, 'utf-8');
+      res.json({ success: true });
+    } catch {
+      res.status(404).json({ success: false, error: 'Page not found' });
+    }
+  } catch (error) {
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+
+// Get page title
+app.get('/api/title/:page', async (req, res) => {
+  try {
+    const { page } = req.params;
+    const filePath = path.join(__dirname, `${page}.html`);
+
+    try {
+      const htmlContent = await fs.readFile(filePath, 'utf-8');
+      // Extract title from <h1 class="page-title">...</h1>
+      const match = htmlContent.match(/<h1 class="page-title">(.*?)<\/h1>/s);
+      const title = match ? match[1].trim() : '';
+      res.json({ success: true, title });
+    } catch {
+      res.status(404).json({ success: false, error: 'Page not found' });
+    }
+  } catch (error) {
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+
+// Save page title (requires auth)
+app.put('/api/title/:page', async (req, res) => {
+  try {
+    const { page } = req.params;
+    const { title, sessionId } = req.body;
+
+    // Check authentication
+    if (!sessionId || !sessions.has(sessionId)) {
+      return res.status(401).json({ success: false, error: 'Unauthorized' });
+    }
+
+    const filePath = path.join(__dirname, `${page}.html`);
+
+    try {
+      let htmlContent = await fs.readFile(filePath, 'utf-8');
+      // Replace title in <h1 class="page-title">...</h1>
+      htmlContent = htmlContent.replace(
+        /<h1 class="page-title">.*?<\/h1>/s,
+        `<h1 class="page-title">${title}</h1>`
+      );
+      await fs.writeFile(filePath, htmlContent, 'utf-8');
+      res.json({ success: true });
+    } catch {
+      res.status(404).json({ success: false, error: 'Page not found' });
+    }
+  } catch (error) {
+    res.status(500).json({ success: false, error: error.message });
+  }
 });
 
 // Login
 app.post('/api/auth/login', (req, res) => {
-    const { username, password } = req.body;
+  const { username, password } = req.body;
 
-    if (username === ADMIN_USERNAME && password === ADMIN_PASSWORD) {
-        const sessionId = Math.random().toString(36).substring(2) + Date.now().toString(36);
-        sessions.set(sessionId, { username, createdAt: Date.now() });
-        res.json({ success: true, sessionId });
-    } else {
-        res.status(401).json({ success: false, error: 'Invalid credentials' });
-    }
+  if (username === ADMIN_USERNAME && password === ADMIN_PASSWORD) {
+    const sessionId = Math.random().toString(36).substring(2) + Date.now().toString(36);
+    sessions.set(sessionId, { username, createdAt: Date.now() });
+    res.json({ success: true, sessionId });
+  } else {
+    res.status(401).json({ success: false, error: 'Invalid credentials' });
+  }
 });
 
 // Verify session
 app.get('/api/auth/verify', (req, res) => {
-    const sessionId = req.headers['x-session-id'];
+  const sessionId = req.headers['x-session-id'];
 
-    if (sessionId && sessions.has(sessionId)) {
-        res.json({ success: true, authenticated: true });
-    } else {
-        res.json({ success: true, authenticated: false });
-    }
+  if (sessionId && sessions.has(sessionId)) {
+    res.json({ success: true, authenticated: true });
+  } else {
+    res.json({ success: true, authenticated: false });
+  }
 });
 
 // Logout
 app.post('/api/auth/logout', (req, res) => {
-    const sessionId = req.headers['x-session-id'];
+  const sessionId = req.headers['x-session-id'];
 
-    if (sessionId) {
-        sessions.delete(sessionId);
-    }
-    res.json({ success: true });
+  if (sessionId) {
+    sessions.delete(sessionId);
+  }
+  res.json({ success: true });
 });
 
 // Start server
 async function startServer() {
-    await ensureContentDir();
+  await ensureContentDir();
 
-    app.listen(PORT, () => {
-        console.log(`🚀 Server running on http://localhost:${PORT}`);
-        console.log(`📝 Admin login: ${ADMIN_USERNAME} / ${ADMIN_PASSWORD}`);
-    });
+  app.listen(PORT, () => {
+    console.log(`🚀 Server running on http://localhost:${PORT}`);
+    console.log(`📝 Admin login: ${ADMIN_USERNAME} / ${ADMIN_PASSWORD}`);
+  });
 }
 
 startServer();

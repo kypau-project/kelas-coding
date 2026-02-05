@@ -241,6 +241,179 @@
                 min-height: 300px;
             }
         }
+
+        /* Image Modal */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.75);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            width: 100%;
+            max-width: 480px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .modal-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--text-tertiary);
+            cursor: pointer;
+            padding: 4px;
+            line-height: 1;
+        }
+
+        .modal-close:hover {
+            color: var(--text-primary);
+        }
+
+        .modal-tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .modal-tab {
+            flex: 1;
+            padding: 10px;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-sm);
+            color: var(--text-secondary);
+            cursor: pointer;
+            font-size: 0.875rem;
+            transition: all var(--transition-fast);
+        }
+
+        .modal-tab.active {
+            background: var(--accent-bg);
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        .modal-tab:hover:not(.active) {
+            background: var(--bg-hover);
+        }
+
+        .modal-content {
+            display: none;
+        }
+
+        .modal-content.active {
+            display: block;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            margin-bottom: 6px;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 10px 12px;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-sm);
+            color: var(--text-primary);
+            font-size: 0.9rem;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+
+        .file-input-wrapper {
+            position: relative;
+            display: block;
+        }
+
+        .file-input-wrapper input[type="file"] {
+            position: absolute;
+            opacity: 0;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+        }
+
+        .file-input-label {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 20px;
+            background: var(--bg-tertiary);
+            border: 2px dashed var(--border-color);
+            border-radius: var(--radius-md);
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all var(--transition-fast);
+        }
+
+        .file-input-label:hover {
+            border-color: var(--accent);
+            color: var(--text-primary);
+        }
+
+        .file-preview {
+            margin-top: 12px;
+            padding: 8px;
+            background: var(--bg-primary);
+            border-radius: var(--radius-sm);
+            font-size: 0.8rem;
+            color: var(--text-tertiary);
+            display: none;
+        }
+
+        .file-preview.active {
+            display: block;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .modal-actions .btn {
+            flex: 1;
+        }
     </style>
 </head>
 
@@ -277,7 +450,29 @@
             <div class="editor-panel">
                 <div class="panel-header">
                     <span class="panel-title">📝 Markdown Editor</span>
-                    <span id="current-file" style="color: var(--accent); font-size: 0.875rem;">index.md</span>
+                    <div style="display: flex; align-items: center; gap: 12px;">
+                        <span id="current-file" style="color: var(--accent); font-size: 0.875rem;">index.md</span>
+                        <button id="preview-page-btn" class="toolbar-btn"
+                            style="background: var(--accent); color: #000; padding: 6px 12px;"
+                            title="Open page in new tab">
+                            👁️ Preview Page
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Page Title Field -->
+                <div class="form-group" style="margin-bottom: 12px;">
+                    <label class="form-label" for="page-title">🏷️ Page Title</label>
+                    <input type="text" class="form-input" id="page-title" placeholder="Judul halaman..."
+                        style="width: 100%; padding: 10px 12px; background: var(--bg-tertiary); border: 1px solid var(--border-color); border-radius: var(--radius-sm); color: var(--text-primary); font-size: 0.9rem; font-weight: 600;">
+                </div>
+
+                <!-- Page Description Field -->
+                <div class="form-group" style="margin-bottom: 16px;">
+                    <label class="form-label" for="page-description">📝 Page Description</label>
+                    <input type="text" class="form-input" id="page-description"
+                        placeholder="Deskripsi singkat halaman ini..."
+                        style="width: 100%; padding: 10px 12px; background: var(--bg-tertiary); border: 1px solid var(--border-color); border-radius: var(--radius-sm); color: var(--text-primary); font-size: 0.9rem;">
                 </div>
 
                 <div class="toolbar">
@@ -291,6 +486,7 @@
                     <button class="toolbar-btn" data-insert="```\n\n```" title="Code Block">{ }</button>
                     <button class="toolbar-btn" data-insert="> " title="Quote">" Quote</button>
                     <button class="toolbar-btn" data-insert="[text](url)" title="Link">🔗 Link</button>
+                    <button class="toolbar-btn" id="image-btn" title="Insert Image">🖼️ Image</button>
                 </div>
 
                 <textarea id="editor-content" class="markdown-editor"
@@ -317,10 +513,165 @@
             <span id="save-status" class="save-status"></span>
         </div>
     </div>
+    <!-- Image Insert Modal -->
+    <div class="modal-overlay" id="image-modal">
+        <div class="modal">
+            <div class="modal-header">
+                <span class="modal-title">🖼️ Insert Image</span>
+                <button class="modal-close" id="modal-close">&times;</button>
+            </div>
+
+            <div class="modal-tabs">
+                <button class="modal-tab active" data-tab="url">From URL</button>
+                <button class="modal-tab" data-tab="file">Upload File</button>
+            </div>
+
+            <div class="modal-content active" data-content="url">
+                <div class="form-group">
+                    <label class="form-label">Image URL</label>
+                    <input type="text" class="form-input" id="image-url" placeholder="https://example.com/image.jpg">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Alt Text (optional)</label>
+                    <input type="text" class="form-input" id="image-alt-url" placeholder="Description of image">
+                </div>
+            </div>
+
+            <div class="modal-content" data-content="file">
+                <div class="form-group">
+                    <div class="file-input-wrapper">
+                        <input type="file" id="image-file" accept="image/*">
+                        <label class="file-input-label">
+                            📁 Click to select an image
+                        </label>
+                    </div>
+                    <div class="file-preview" id="file-preview"></div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Alt Text (optional)</label>
+                    <input type="text" class="form-input" id="image-alt-file" placeholder="Description of image">
+                </div>
+            </div>
+
+            <div class="modal-actions">
+                <button class="btn btn-secondary" id="modal-cancel">Cancel</button>
+                <button class="btn" id="modal-insert">Insert Image</button>
+            </div>
+        </div>
+    </div>
 
     <!-- Marked.js for Markdown parsing -->
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <script src="assets/js/admin.js"></script>
+    <script>
+        // Image Modal Handler
+        (function () {
+            const modal = document.getElementById('image-modal');
+            const imageBtn = document.getElementById('image-btn');
+            const closeBtn = document.getElementById('modal-close');
+            const cancelBtn = document.getElementById('modal-cancel');
+            const insertBtn = document.getElementById('modal-insert');
+            const tabs = document.querySelectorAll('.modal-tab');
+            const contents = document.querySelectorAll('.modal-content');
+            const fileInput = document.getElementById('image-file');
+            const filePreview = document.getElementById('file-preview');
+
+            let uploadedImageData = null;
+
+            // Open modal
+            imageBtn.addEventListener('click', () => {
+                modal.classList.add('active');
+            });
+
+            // Close modal
+            function closeModal() {
+                modal.classList.remove('active');
+                // Reset inputs
+                document.getElementById('image-url').value = '';
+                document.getElementById('image-alt-url').value = '';
+                document.getElementById('image-alt-file').value = '';
+                fileInput.value = '';
+                filePreview.classList.remove('active');
+                filePreview.textContent = '';
+                uploadedImageData = null;
+            }
+
+            closeBtn.addEventListener('click', closeModal);
+            cancelBtn.addEventListener('click', closeModal);
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) closeModal();
+            });
+
+            // Tab switching
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    tabs.forEach(t => t.classList.remove('active'));
+                    tab.classList.add('active');
+                    const tabName = tab.dataset.tab;
+                    contents.forEach(c => {
+                        c.classList.toggle('active', c.dataset.content === tabName);
+                    });
+                });
+            });
+
+            // File upload handler
+            fileInput.addEventListener('change', (e) => {
+                const file = e.target.files[0];
+                if (file) {
+                    // Check file size (max 5MB)
+                    if (file.size > 5 * 1024 * 1024) {
+                        alert('File too large. Maximum size is 5MB.');
+                        fileInput.value = '';
+                        return;
+                    }
+
+                    const reader = new FileReader();
+                    reader.onload = (event) => {
+                        uploadedImageData = event.target.result;
+                        filePreview.textContent = `✅ ${file.name} (${(file.size / 1024).toFixed(1)} KB)`;
+                        filePreview.classList.add('active');
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+
+            // Insert image
+            insertBtn.addEventListener('click', () => {
+                const activeTab = document.querySelector('.modal-tab.active').dataset.tab;
+                let imageUrl, altText;
+
+                if (activeTab === 'url') {
+                    imageUrl = document.getElementById('image-url').value.trim();
+                    altText = document.getElementById('image-alt-url').value.trim() || 'image';
+                    if (!imageUrl) {
+                        alert('Please enter an image URL');
+                        return;
+                    }
+                } else {
+                    if (!uploadedImageData) {
+                        alert('Please select an image file');
+                        return;
+                    }
+                    imageUrl = uploadedImageData;
+                    altText = document.getElementById('image-alt-file').value.trim() || 'image';
+                }
+
+                // Insert markdown
+                const markdown = `![${altText}](${imageUrl})`;
+                const editor = document.getElementById('editor-content');
+                const start = editor.selectionStart;
+                const end = editor.selectionEnd;
+                editor.value = editor.value.substring(0, start) + markdown + editor.value.substring(end);
+                editor.focus();
+                editor.setSelectionRange(start + markdown.length, start + markdown.length);
+
+                // Trigger input event for preview update
+                editor.dispatchEvent(new Event('input'));
+
+                closeModal();
+            });
+        })();
+    </script>
 </body>
 
 </html>

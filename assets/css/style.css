@@ -9,7 +9,7 @@
    CSS Variables
    ======================================== */
 :root {
-  /* Colors */
+  /* Colors - Dark Mode (default) */
   --bg-primary: #0f0f0f;
   --bg-secondary: #161616;
   --bg-tertiary: #1a1a1a;
@@ -45,6 +45,26 @@
   --radius-sm: 4px;
   --radius-md: 8px;
   --radius-lg: 12px;
+}
+
+/* Light Mode */
+[data-theme="light"] {
+  --bg-primary: #ffffff;
+  --bg-secondary: #f8f9fa;
+  --bg-tertiary: #f1f3f4;
+  --bg-hover: #e8eaed;
+
+  --text-primary: #1a1a1a;
+  --text-secondary: #5f6368;
+  --text-tertiary: #9aa0a6;
+
+  --accent: #b8860b;
+  --accent-hover: #996f0a;
+  --accent-bg: rgba(184, 134, 11, 0.1);
+  --accent-border: rgba(184, 134, 11, 0.3);
+
+  --border-color: #dadce0;
+  --border-light: #e8eaed;
 }
 
 /* Hide content until loaded - prevents content flash in server mode */
@@ -138,8 +158,31 @@ img {
 }
 
 .sidebar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   padding: 20px 16px;
   border-bottom: 1px solid var(--border-color);
+}
+
+.sidebar-theme-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.sidebar-theme-toggle:hover {
+  background: var(--accent-bg);
+  border-color: var(--accent-border);
+  color: var(--accent);
 }
 
 .sidebar-logo {
@@ -1253,5 +1296,153 @@ img {
   .search-modal-content {
     width: 95%;
     max-height: 80vh;
+  }
+}
+
+/* ========================================
+   Page Navigation (Prev/Next)
+   ======================================== */
+.page-navigation {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-top: 48px;
+  padding-top: 32px;
+  border-top: 1px solid var(--border-color);
+}
+
+.page-nav-link {
+  display: flex;
+  flex-direction: column;
+  padding: 16px 20px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  text-decoration: none;
+  transition: all var(--transition-fast);
+}
+
+.page-nav-link:hover {
+  background: var(--bg-tertiary);
+  border-color: var(--accent-border);
+}
+
+.page-nav-link.prev {
+  align-items: flex-start;
+}
+
+.page-nav-link.next {
+  align-items: flex-end;
+  text-align: right;
+}
+
+.page-nav-label {
+  font-size: 0.75rem;
+  color: var(--text-tertiary);
+  margin-bottom: 4px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.page-nav-title {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--accent);
+}
+
+.page-nav-link:hover .page-nav-title {
+  color: var(--accent-hover);
+}
+
+/* Single nav (only prev or only next) */
+.page-navigation.single-prev {
+  grid-template-columns: 1fr;
+}
+
+.page-navigation.single-next {
+  grid-template-columns: 1fr;
+}
+
+.page-navigation.single-next .page-nav-link {
+  margin-left: auto;
+  max-width: 50%;
+}
+
+@media (max-width: 768px) {
+
+  /* Keep side by side on mobile like reference image */
+  .page-navigation {
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  .page-nav-link {
+    padding: 12px 16px;
+  }
+
+  .page-nav-label {
+    font-size: 0.7rem;
+  }
+
+  .page-nav-title {
+    font-size: 0.85rem;
+  }
+
+  .page-navigation.single-prev,
+  .page-navigation.single-next {
+    grid-template-columns: 1fr;
+  }
+
+  .page-navigation.single-next .page-nav-link {
+    max-width: 100%;
+  }
+}
+
+/* ========================================
+   Breadcrumb Navigation
+   ======================================== */
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0;
+  margin: 0 0 16px 0;
+  font-size: 0.875rem;
+  color: var(--text-tertiary);
+  list-style: none;
+}
+
+.breadcrumb-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.breadcrumb-item a {
+  color: var(--text-secondary);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+.breadcrumb-item a:hover {
+  color: var(--accent);
+}
+
+.breadcrumb-separator {
+  color: var(--text-tertiary);
+  font-size: 0.75rem;
+}
+
+.breadcrumb-current {
+  color: var(--text-primary);
+  font-weight: 500;
+}
+
+@media (max-width: 768px) {
+  .breadcrumb {
+    font-size: 0.8rem;
+    gap: 6px;
+    flex-wrap: wrap;
   }
 }

@@ -448,6 +448,16 @@
     const currentPath = window.location.pathname.split('/').pop() || 'index.html';
     const pageName = currentPath.replace('.html', '') || 'index';
 
+    // Show loading state immediately to prevent flash of old content
+    const originalContent = content.innerHTML;
+    content.innerHTML = `
+      <div class="loading-state">
+        <div class="loading-spinner"></div>
+        <p>Memuat konten...</p>
+      </div>
+    `;
+    content.style.opacity = '1';
+
     try {
       const response = await fetch(`${API_BASE}/content/${pageName}`);
       const data = await response.json();
@@ -457,9 +467,16 @@
         generateTableOfContents();
         initScrollSpy();
         enhanceCodeBlocks();
+      } else {
+        // If no dynamic content, restore original
+        content.innerHTML = originalContent;
+        enhanceCodeBlocks();
       }
     } catch (error) {
+      // Running in static mode, restore original content
       console.log('Running in static mode, using embedded content');
+      content.innerHTML = originalContent;
+      enhanceCodeBlocks();
     }
   }
 

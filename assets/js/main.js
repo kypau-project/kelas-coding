@@ -487,6 +487,7 @@
 
       if (data.success && data.html) {
         content.innerHTML = data.html;
+        content.classList.add('loaded');
         content.style.visibility = 'visible';
         content.classList.remove('hide-until-loaded');
         generateTableOfContents();
@@ -494,6 +495,7 @@
         enhanceCodeBlocks();
       } else {
         // If no dynamic content, show original
+        content.classList.add('loaded');
         content.style.visibility = 'visible';
         content.classList.remove('hide-until-loaded');
         enhanceCodeBlocks();
@@ -501,6 +503,7 @@
     } catch (error) {
       // Running in static mode, show original content
       console.log('Running in static mode, using embedded content');
+      content.classList.add('loaded');
       content.style.visibility = 'visible';
       content.classList.remove('hide-until-loaded');
       enhanceCodeBlocks();

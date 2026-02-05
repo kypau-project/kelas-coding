@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Admin Dashboard - Kelas Coding</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚙️</text></svg>">
+    <style>
+        .admin-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin-top: 24px;
+        }
+
+        .editor-panel,
+        .preview-panel {
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .panel-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 16px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .panel-title {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .markdown-editor {
+            width: 100%;
+            min-height: 500px;
+            padding: 16px;
+            background-color: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            color: var(--text-primary);
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+            line-height: 1.6;
+            resize: vertical;
+        }
+
+        .markdown-editor:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+
+        .preview-content {
+            flex: 1;
+            padding: 16px;
+            background-color: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            overflow-y: auto;
+            max-height: 500px;
+        }
+
+        .preview-content h2 {
+            font-size: 1.5rem;
+            margin: 24px 0 12px;
+            color: var(--text-primary);
+        }
+
+        .preview-content h2:first-child {
+            margin-top: 0;
+        }
+
+        .preview-content h3 {
+            font-size: 1.2rem;
+            margin: 20px 0 10px;
+            color: var(--text-primary);
+        }
+
+        .preview-content p {
+            margin-bottom: 12px;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        .preview-content ul,
+        .preview-content ol {
+            margin: 12px 0;
+            padding-left: 24px;
+            color: var(--text-secondary);
+        }
+
+        .preview-content li {
+            margin-bottom: 6px;
+        }
+
+        .preview-content code {
+            background-color: var(--bg-primary);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: var(--font-mono);
+            font-size: 0.85em;
+            color: var(--accent);
+        }
+
+        .preview-content pre {
+            background-color: var(--bg-primary);
+            padding: 16px;
+            border-radius: var(--radius-md);
+            overflow-x: auto;
+            margin: 16px 0;
+        }
+
+        .preview-content pre code {
+            background: none;
+            padding: 0;
+            color: var(--text-secondary);
+        }
+
+        .preview-content blockquote {
+            border-left: 4px solid var(--accent);
+            padding-left: 16px;
+            margin: 16px 0;
+            color: var(--text-secondary);
+            background-color: var(--accent-bg);
+            padding: 12px 16px;
+            border-radius: 0 var(--radius-md) var(--radius-md) 0;
+        }
+
+        .preview-content a {
+            color: var(--accent);
+            text-decoration: underline;
+        }
+
+        .status-bar {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-top: 16px;
+        }
+
+        .status-indicator {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.875rem;
+            color: var(--text-tertiary);
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: var(--text-tertiary);
+        }
+
+        .status-dot.connected {
+            background-color: #22c55e;
+        }
+
+        .status-dot.saving {
+            background-color: #eab308;
+        }
+
+        .status-dot.error {
+            background-color: #ef4444;
+        }
+
+        .save-status {
+            margin-left: auto;
+            font-size: 0.875rem;
+            color: var(--text-tertiary);
+        }
+
+        .toolbar {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 12px;
+            flex-wrap: wrap;
+        }
+
+        .toolbar-btn {
+            padding: 6px 10px;
+            background-color: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-sm);
+            color: var(--text-secondary);
+            cursor: pointer;
+            font-size: 0.875rem;
+            transition: all var(--transition-fast);
+        }
+
+        .toolbar-btn:hover {
+            background-color: var(--bg-hover);
+            color: var(--text-primary);
+        }
+
+        .help-text {
+            font-size: 0.8rem;
+            color: var(--text-tertiary);
+            margin-top: 8px;
+        }
+
+        @media (max-width: 1024px) {
+            .admin-layout {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .admin-dashboard {
+                padding: 20px;
+            }
+
+            .admin-header {
+                flex-direction: column;
+                gap: 16px;
+                align-items: flex-start;
+            }
+
+            .admin-nav {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 8px;
+            }
+
+            .markdown-editor,
+            .preview-content {
+                min-height: 300px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="admin-dashboard">
+        <header class="admin-header">
+            <h1>⚙️ Admin Dashboard</h1>
+            <div style="display: flex; gap: 12px; align-items: center;">
+                <div class="status-indicator">
+                    <span class="status-dot" id="connection-dot"></span>
+                    <span id="connection-status">Connecting...</span>
+                </div>
+                <button id="logout-btn" class="btn btn-secondary">Logout</button>
+            </div>
+        </header>
+
+        <p style="color: var(--text-secondary); margin-bottom: 24px;">
+            Edit konten menggunakan format <strong>Markdown</strong> (seperti GitHub README). Perubahan akan tersimpan
+            secara real-time.
+        </p>
+
+        <nav class="admin-nav">
+            <button class="admin-nav-item active" data-page="index">Selamat Datang</button>
+            <button class="admin-nav-item" data-page="step-1">Step 1 - Persiapan</button>
+            <button class="admin-nav-item" data-page="step-2">Step 2 - Struktur Dasar</button>
+            <button class="admin-nav-item" data-page="step-3">Step 3 - Avatar</button>
+            <button class="admin-nav-item" data-page="step-4">Step 4 - Nama & Deskripsi</button>
+            <button class="admin-nav-item" data-page="step-5">Step 5 - Link Sosmed</button>
+            <button class="admin-nav-item" data-page="step-6">Step 6 - Deploy</button>
+            <button class="admin-nav-item" data-page="penutup">Penutup</button>
+        </nav>
+
+        <div class="admin-layout">
+            <div class="editor-panel">
+                <div class="panel-header">
+                    <span class="panel-title">📝 Markdown Editor</span>
+                    <span id="current-file" style="color: var(--accent); font-size: 0.875rem;">index.md</span>
+                </div>
+
+                <div class="toolbar">
+                    <button class="toolbar-btn" data-insert="**" data-wrap="true" title="Bold">B</button>
+                    <button class="toolbar-btn" data-insert="*" data-wrap="true" title="Italic"><em>I</em></button>
+                    <button class="toolbar-btn" data-insert="## " title="Heading">H2</button>
+                    <button class="toolbar-btn" data-insert="### " title="Subheading">H3</button>
+                    <button class="toolbar-btn" data-insert="- " title="List">• List</button>
+                    <button class="toolbar-btn" data-insert="1. " title="Numbered List">1. List</button>
+                    <button class="toolbar-btn" data-insert="`" data-wrap="true" title="Code">Code</button>
+                    <button class="toolbar-btn" data-insert="```\n\n```" title="Code Block">{ }</button>
+                    <button class="toolbar-btn" data-insert="> " title="Quote">" Quote</button>
+                    <button class="toolbar-btn" data-insert="[text](url)" title="Link">🔗 Link</button>
+                </div>
+
+                <textarea id="editor-content" class="markdown-editor"
+                    placeholder="Tulis konten dalam format Markdown..."></textarea>
+
+                <p class="help-text">
+                    💡 Tips: Gunakan **bold**, *italic*, ## heading, - list, \`code\`, dan > quote
+                </p>
+            </div>
+
+            <div class="preview-panel">
+                <div class="panel-header">
+                    <span class="panel-title">👁️ Live Preview</span>
+                </div>
+                <div id="preview-content" class="preview-content">
+                    <p style="color: var(--text-tertiary);">Preview akan muncul di sini...</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="status-bar">
+            <button id="save-btn" class="btn">💾 Simpan</button>
+            <button class="btn btn-secondary" onclick="window.open('/', '_blank')">👁️ Lihat Website</button>
+            <span id="save-status" class="save-status"></span>
+        </div>
+    </div>
+
+    <!-- Marked.js for Markdown parsing -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="assets/js/admin.js"></script>
+</body>
+
+</html>

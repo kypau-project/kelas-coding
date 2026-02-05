@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Step 3 - Menambahkan Avatar ke website Link Bio">
+  <title>Step 3 - Avatar - Kelas Coding</title>
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="icon"
+    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💻</text></svg>">
+</head>
+
+<body>
+  <!-- Mobile Header (shown on mobile only) -->
+  <header class="mobile-header">
+    <a href="index.html" class="mobile-header-logo">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <polyline points="16,18 22,12 16,6"></polyline>
+        <polyline points="8,6 2,12 8,18"></polyline>
+      </svg>
+      <span>Kodein Project</span>
+    </a>
+    <div class="mobile-header-actions">
+      <button class="mobile-header-btn" aria-label="Search">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="11" cy="11" r="8"></circle>
+          <path d="m21 21-4.35-4.35"></path>
+        </svg>
+      </button>
+      <button class="mobile-menu-toggle" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Sidebar Overlay -->
+  <div class="sidebar-overlay"></div>
+
+  <div class="layout">
+    <!-- Left Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <a href="index.html" class="sidebar-logo">
+          <span class="sidebar-logo-icon">💻</span>
+          <span>Kelas Coding</span>
+        </a>
+      </div>
+
+      <div class="sidebar-search">
+        <div class="search-box">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"></circle>
+            <path d="m21 21-4.35-4.35"></path>
+          </svg>
+          <span>Search</span>
+          <kbd>Ctrl K</kbd>
+        </div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <a href="index.html" class="nav-item">Selamat Datang</a>
+        <a href="step-1.html" class="nav-item">Step 1 - Persiapan</a>
+        <a href="step-2.html" class="nav-item">Step 2 - Struktur Dasar</a>
+        <a href="step-3.html" class="nav-item active">Step 3 - Avatar</a>
+        <a href="step-4.html" class="nav-item">Step 4 - Nama dan Deskripsi</a>
+        <a href="step-5.html" class="nav-item">Step 5 - Link Sosmed</a>
+        <a href="step-6.html" class="nav-item">Step 6 - Deploy</a>
+        <a href="penutup.html" class="nav-item">Penutup</a>
+      </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-wrapper">
+      <div class="main-content">
+        <header class="page-header">
+          <h1 class="page-title">Step 3 - Avatar</h1>
+          <p class="page-description">Menambahkan foto profil ke website Link Bio</p>
+        </header>
+
+        <div class="content">
+          <h2 id="tentang-avatar"><span class="heading-icon">🎨</span> Apa itu Avatar?</h2>
+          <p>Avatar adalah gambar profil yang mewakili identitasmu di internet. Ini bisa berupa foto diri,
+            ilustrasi, atau gambar apapun yang kamu suka!</p>
+
+          <div class="highlight-box">
+            <p><strong>Tips:</strong> Gunakan gambar dengan rasio 1:1 (persegi) agar terlihat rapi saat
+              dibuat bulat.</p>
+          </div>
+
+          <h2 id="siapkan-gambar"><span class="heading-icon">📷</span> Siapkan Gambar Avatar</h2>
+          <p>Kamu punya beberapa opsi untuk gambar avatar:</p>
+
+          <h3>Opsi 1: Gunakan Foto Sendiri</h3>
+          <ul>
+            <li>Upload foto ke repository GitHub-mu</li>
+            <li>Atau gunakan layanan hosting gambar gratis</li>
+          </ul>
+
+          <h3>Opsi 2: Gunakan Placeholder</h3>
+          <p>Untuk sementara, kita bisa pakai layanan placeholder seperti:</p>
+          <pre><code>https://api.dicebear.com/7.x/avataaars/svg?seed=NamaKamu</code></pre>
+
+          <h3>Opsi 3: Gunakan UI Avatars</h3>
+          <p>Generate avatar berdasarkan inisial nama:</p>
+          <pre><code>https://ui-avatars.com/api/?name=Nama+Kamu&background=random</code></pre>
+
+          <h2 id="tambah-tag-img"><span class="heading-icon">🖼️</span> Tambahkan Tag Image</h2>
+          <p>Tambahkan kode ini di dalam <code>&lt;div class="container"&gt;</code>:</p>
+
+          <pre><code>&lt;!-- Avatar --&gt;
+&lt;img 
+  src="https://api.dicebear.com/7.x/avataaars/svg?seed=Felix" 
+  alt="Foto Profil" 
+  class="avatar"
+&gt;</code></pre>
+
+          <h3>Penjelasan:</h3>
+          <ul>
+            <li><code>src</code> - Alamat (URL) gambar</li>
+            <li><code>alt</code> - Teks alternatif jika gambar tidak bisa dimuat</li>
+            <li><code>class</code> - Nama class untuk styling CSS</li>
+          </ul>
+
+          <h2 id="style-avatar"><span class="heading-icon">✨</span> Styling Avatar dengan CSS</h2>
+          <p>Tambahkan CSS ini untuk membuat avatar terlihat keren:</p>
+
+          <pre><code>.avatar {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 4px solid #333;
+  margin-bottom: 20px;
+  transition: transform 0.3s ease;
+}
+
+.avatar:hover {
+  transform: scale(1.05);
+}</code></pre>
+
+          <h3>Penjelasan CSS:</h3>
+          <ul>
+            <li><code>width & height</code> - Ukuran gambar 120x120 pixel</li>
+            <li><code>border-radius: 50%</code> - Membuat gambar menjadi bulat</li>
+            <li><code>object-fit: cover</code> - Gambar mengisi area tanpa distorsi</li>
+            <li><code>border</code> - Garis tepi di sekeliling avatar</li>
+            <li><code>transition</code> - Animasi smooth saat hover</li>
+          </ul>
+
+          <h2 id="variasi-avatar"><span class="heading-icon">🎭</span> Variasi Gaya Avatar</h2>
+
+          <h3>Avatar dengan Bayangan:</h3>
+          <pre><code>.avatar {
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}</code></pre>
+
+          <h3>Avatar dengan Border Gradient:</h3>
+          <pre><code>.avatar-wrapper {
+  padding: 4px;
+  background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.avatar {
+  border: none;
+}</code></pre>
+
+          <h2 id="kode-lengkap"><span class="heading-icon">✅</span> Kode Lengkap Step 3</h2>
+          <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="id"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+  &lt;title&gt;Link Bio Saya&lt;/title&gt;
+  &lt;style&gt;
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #1a1a1a;
+      color: white;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .container {
+      text-align: center;
+      padding: 20px;
+      max-width: 400px;
+      width: 100%;
+    }
+
+    .avatar {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 4px solid #333;
+      margin-bottom: 20px;
+      transition: transform 0.3s ease;
+    }
+
+    .avatar:hover {
+      transform: scale(1.05);
+    }
+  &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;div class="container"&gt;
+    &lt;img 
+      src="https://api.dicebear.com/7.x/avataaars/svg?seed=Felix" 
+      alt="Foto Profil" 
+      class="avatar"
+    &gt;
+  &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+
+          <div class="highlight-box">
+            <p>Avatar sudah siap! Lanjut ke <a href="step-4.html"><strong>Step 4 - Nama dan
+                  Deskripsi</strong></a>!</p>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Right Sidebar (Table of Contents) -->
+    <aside class="toc-sidebar">
+      <div class="toc-title">On this page</div>
+      <nav id="toc-list" class="toc-list">
+        <!-- Generated by JavaScript -->
+      </nav>
+    </aside>
+  </div>
+
+  <script src="assets/js/main.js"></script>
+</body>
+
+</html>

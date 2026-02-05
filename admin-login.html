@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Admin Login - Kelas Coding</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔐</text></svg>">
+</head>
+
+<body>
+    <div class="admin-container">
+        <h1 class="admin-title">🔐 Admin Login</h1>
+        <form id="login-form">
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" required autocomplete="username">
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required autocomplete="current-password">
+            </div>
+            <button type="submit" class="btn">Login</button>
+            <p id="error-message" class="error-message" style="display: none;"></p>
+        </form>
+    </div>
+
+    <script>
+        (function () {
+            const API_BASE = '/api';
+            const SESSION_KEY = 'admin_session_id';
+
+            // Check if already logged in
+            const existingSession = localStorage.getItem(SESSION_KEY);
+            if (existingSession) {
+                fetch(`${API_BASE}/auth/verify`, {
+                    headers: { 'X-Session-Id': existingSession }
+                })
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.authenticated) {
+                            window.location.href = 'admin.html';
+                        }
+                    })
+                    .catch(() => { });
+            }
+
+            // Handle login
+            document.getElementById('login-form').addEventListener('submit', async function (e) {
+                e.preventDefault();
+
+                const username = document.getElementById('username').value;
+                const password = document.getElementById('password').value;
+                const errorMsg = document.getElementById('error-message');
+
+                try {
+                    const response = await fetch(`${API_BASE}/auth/login`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ username, password })
+                    });
+
+                    const data = await response.json();
+
+                    if (data.success) {
+                        localStorage.setItem(SESSION_KEY, data.sessionId);
+                        window.location.href = 'admin.html';
+                    } else {
+                        errorMsg.textContent = 'Username atau password salah!';
+                        errorMsg.style.display = 'block';
+                    }
+                } catch (error) {
+                    errorMsg.textContent = 'Server tidak tersedia. Pastikan server berjalan.';
+                    errorMsg.style.display = 'block';
+                }
+            });
+        })();
+    </script>
+</body>
+
+</html>

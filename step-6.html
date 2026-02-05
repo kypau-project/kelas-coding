@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Step 6 - Deploy website ke GitHub Pages">
+    <title>Step 6 - Deploy - Kelas Coding</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💻</text></svg>">
+</head>
+
+<body>
+    <!-- Mobile Header (shown on mobile only) -->
+    <header class="mobile-header">
+        <a href="index.html" class="mobile-header-logo">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="16,18 22,12 16,6"></polyline>
+                <polyline points="8,6 2,12 8,18"></polyline>
+            </svg>
+            <span>Kodein Project</span>
+        </a>
+        <div class="mobile-header-actions">
+            <button class="mobile-header-btn" aria-label="Search">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <path d="m21 21-4.35-4.35"></path>
+                </svg>
+            </button>
+            <button class="mobile-menu-toggle" aria-label="Toggle menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Sidebar Overlay -->
+    <div class="sidebar-overlay"></div>
+    <div class="layout">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <a href="index.html" class="sidebar-logo">
+                    <span class="sidebar-logo-icon">💻</span>
+                    <span>Kelas Coding</span>
+                </a>
+            </div>
+            <div class="sidebar-search">
+                <div class="search-box">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <path d="m21 21-4.35-4.35"></path>
+                    </svg>
+                    <span>Search</span><kbd>Ctrl K</kbd>
+                </div>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="index.html" class="nav-item">Selamat Datang</a>
+                <a href="step-1.html" class="nav-item">Step 1 - Persiapan</a>
+                <a href="step-2.html" class="nav-item">Step 2 - Struktur Dasar</a>
+                <a href="step-3.html" class="nav-item">Step 3 - Avatar</a>
+                <a href="step-4.html" class="nav-item">Step 4 - Nama dan Deskripsi</a>
+                <a href="step-5.html" class="nav-item">Step 5 - Link Sosmed</a>
+                <a href="step-6.html" class="nav-item active">Step 6 - Deploy</a>
+                <a href="penutup.html" class="nav-item">Penutup</a>
+            </nav>
+        </aside>
+        <main class="main-wrapper">
+            <div class="main-content">
+                <header class="page-header">
+                    <h1 class="page-title">Step 6 - Deploy</h1>
+                    <p class="page-description">Mempublikasikan website ke GitHub Pages</p>
+                </header>
+                <div class="content">
+                    <h2 id="apa-itu-deploy"><span class="heading-icon">🚀</span> Apa itu Deploy?</h2>
+                    <p>Deploy adalah proses mempublikasikan website-mu agar bisa diakses oleh semua orang di internet.
+                        Kita akan menggunakan <strong>GitHub Pages</strong> yang gratis!</p>
+
+                    <div class="highlight-box">
+                        <p><strong>Hasil:</strong> Website-mu akan tersedia di
+                            <code>https://username.github.io/nama-repo</code>
+                        </p>
+                    </div>
+
+                    <h2 id="upload-file"><span class="heading-icon">📤</span> 1. Upload File ke GitHub</h2>
+                    <ol>
+                        <li>Buka repository yang sudah kamu buat</li>
+                        <li>Klik tombol <strong>"Add file"</strong> → <strong>"Upload files"</strong></li>
+                        <li>Drag & drop file <code>index.html</code> dan folder lainnya</li>
+                        <li>Tulis pesan commit, contoh: "Add link bio website"</li>
+                        <li>Klik <strong>"Commit changes"</strong></li>
+                    </ol>
+
+                    <h2 id="aktifkan-pages"><span class="heading-icon">⚙️</span> 2. Aktifkan GitHub Pages</h2>
+                    <ol>
+                        <li>Buka repository di GitHub</li>
+                        <li>Klik tab <strong>Settings</strong> (ikon gear)</li>
+                        <li>Scroll ke bagian <strong>Pages</strong> di sidebar kiri</li>
+                        <li>Di bagian "Source", pilih <strong>Deploy from a branch</strong></li>
+                        <li>Pilih branch <strong>main</strong> dan folder <strong>/ (root)</strong></li>
+                        <li>Klik <strong>Save</strong></li>
+                    </ol>
+
+                    <h2 id="tunggu-deploy"><span class="heading-icon">⏳</span> 3. Tunggu Proses Deploy</h2>
+                    <p>GitHub akan memproses website-mu. Biasanya memakan waktu 1-5 menit.</p>
+                    <ul>
+                        <li>Refresh halaman Settings → Pages</li>
+                        <li>Akan muncul link hijau jika sudah berhasil</li>
+                        <li>Klik link tersebut untuk melihat website-mu!</li>
+                    </ul>
+
+                    <h2 id="custom-domain"><span class="heading-icon">🌐</span> 4. Custom Domain (Opsional)</h2>
+                    <p>Ingin pakai domain sendiri seperti <code>namakamu.com</code>?</p>
+                    <ol>
+                        <li>Beli domain dari Namecheap, Niagahoster, dll</li>
+                        <li>Di Settings → Pages, masukkan domain custom</li>
+                        <li>Tambahkan record DNS di provider domain-mu</li>
+                    </ol>
+
+                    <h2 id="troubleshoot"><span class="heading-icon">🔧</span> Troubleshooting</h2>
+                    <h3>Website tidak muncul?</h3>
+                    <ul>
+                        <li>Pastikan file utama bernama <code>index.html</code> (huruf kecil)</li>
+                        <li>Tunggu beberapa menit dan refresh</li>
+                        <li>Cek tab Actions untuk melihat status build</li>
+                    </ul>
+
+                    <div class="highlight-box">
+                        <p>🎉 Selamat! Website-mu sudah live! Lanjut ke <a
+                                href="penutup.html"><strong>Penutup</strong></a>.</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <aside class="toc-sidebar">
+            <div class="toc-title">On this page</div>
+            <nav id="toc-list" class="toc-list"></nav>
+        </aside>
+    </div>
+    <script src="assets/js/main.js"></script>
+</body>
+
+</html>

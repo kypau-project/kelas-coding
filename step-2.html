@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Step 2 - Struktur Dasar HTML untuk website Link Bio">
+  <title>Step 2 - Struktur Dasar - Kelas Coding</title>
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="icon"
+    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💻</text></svg>">
+</head>
+
+<body>
+  <!-- Mobile Header (shown on mobile only) -->
+  <header class="mobile-header">
+    <a href="index.html" class="mobile-header-logo">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <polyline points="16,18 22,12 16,6"></polyline>
+        <polyline points="8,6 2,12 8,18"></polyline>
+      </svg>
+      <span>Kodein Project</span>
+    </a>
+    <div class="mobile-header-actions">
+      <button class="mobile-header-btn" aria-label="Search">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="11" cy="11" r="8"></circle>
+          <path d="m21 21-4.35-4.35"></path>
+        </svg>
+      </button>
+      <button class="mobile-menu-toggle" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Sidebar Overlay -->
+  <div class="sidebar-overlay"></div>
+
+  <div class="layout">
+    <!-- Left Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <a href="index.html" class="sidebar-logo">
+          <span class="sidebar-logo-icon">💻</span>
+          <span>Kelas Coding</span>
+        </a>
+      </div>
+
+      <div class="sidebar-search">
+        <div class="search-box">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"></circle>
+            <path d="m21 21-4.35-4.35"></path>
+          </svg>
+          <span>Search</span>
+          <kbd>Ctrl K</kbd>
+        </div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <a href="index.html" class="nav-item">Selamat Datang</a>
+        <a href="step-1.html" class="nav-item">Step 1 - Persiapan</a>
+        <a href="step-2.html" class="nav-item active">Step 2 - Struktur Dasar</a>
+        <a href="step-3.html" class="nav-item">Step 3 - Avatar</a>
+        <a href="step-4.html" class="nav-item">Step 4 - Nama dan Deskripsi</a>
+        <a href="step-5.html" class="nav-item">Step 5 - Link Sosmed</a>
+        <a href="step-6.html" class="nav-item">Step 6 - Deploy</a>
+        <a href="penutup.html" class="nav-item">Penutup</a>
+      </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-wrapper">
+      <div class="main-content">
+        <header class="page-header">
+          <h1 class="page-title">Step 2 - Struktur Dasar</h1>
+          <p class="page-description">Membuat struktur dasar HTML untuk website Link Bio</p>
+        </header>
+
+        <div class="content">
+          <h2 id="apa-itu-html"><span class="heading-icon">📦</span> Apa itu HTML?</h2>
+          <p>HTML (<strong>HyperText Markup Language</strong>) adalah bahasa untuk membuat struktur halaman
+            web. Bayangkan HTML sebagai kerangka atau tulang dari website-mu.</p>
+
+          <div class="highlight-box">
+            <p><strong>Analogi:</strong> Kalau website adalah rumah, HTML adalah struktur bangunannya
+              (dinding, pintu, jendela), CSS adalah cat dan dekorasinya, dan JavaScript adalah sistem
+              listriknya.</p>
+          </div>
+
+          <h2 id="buat-file-index"><span class="heading-icon">📄</span> Buat File index.html</h2>
+          <p>Mari kita mulai dengan membuat file utama. Nama <code>index.html</code> adalah nama standar untuk
+            halaman utama website.</p>
+
+          <h3>Kode Dasar HTML:</h3>
+          <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="id"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+  &lt;title&gt;Link Bio Saya&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+
+  &lt;!-- Konten akan kita tambahkan di sini --&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+
+          <h2 id="penjelasan-kode"><span class="heading-icon">📖</span> Penjelasan Setiap Bagian</h2>
+
+          <h3>&lt;!DOCTYPE html&gt;</h3>
+          <p>Memberitahu browser bahwa ini adalah dokumen HTML5 (versi terbaru HTML).</p>
+
+          <h3>&lt;html lang="id"&gt;</h3>
+          <p>Tag pembuka dokumen HTML. <code>lang="id"</code> menandakan bahasa Indonesia.</p>
+
+          <h3>&lt;head&gt;</h3>
+          <p>Bagian "kepala" yang berisi informasi tentang halaman:</p>
+          <ul>
+            <li><code>&lt;meta charset="UTF-8"&gt;</code> - Mendukung karakter khusus seperti emoji</li>
+            <li><code>&lt;meta name="viewport"...&gt;</code> - Agar tampil bagus di HP</li>
+            <li><code>&lt;title&gt;</code> - Judul yang muncul di tab browser</li>
+          </ul>
+
+          <h3>&lt;body&gt;</h3>
+          <p>Bagian "badan" tempat semua konten yang terlihat di halaman.</p>
+
+          <h2 id="tambah-container"><span class="heading-icon">📦</span> Tambahkan Container</h2>
+          <p>Sekarang, mari tambahkan struktur dasar untuk konten Link Bio:</p>
+
+          <pre><code>&lt;body&gt;
+  &lt;div class="container"&gt;
+    &lt;!-- Avatar akan di sini --&gt;
+    
+    &lt;!-- Nama dan Bio akan di sini --&gt;
+    
+    &lt;!-- Link-link akan di sini --&gt;
+  &lt;/div&gt;
+&lt;/body&gt;</code></pre>
+
+          <h3>Kenapa pakai div?</h3>
+          <p><code>&lt;div&gt;</code> adalah elemen "wadah" generik yang bisa kita style dengan CSS nanti.
+            Class <code>container</code> akan membantu kita mengatur tata letak.</p>
+
+          <h2 id="tambah-css-dasar"><span class="heading-icon">🎨</span> Tambahkan CSS Dasar</h2>
+          <p>Mari tambahkan sedikit styling dasar agar terlihat lebih rapi. Tambahkan ini di dalam
+            <code>&lt;head&gt;</code>:
+          </p>
+
+          <pre><code>&lt;style&gt;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: #1a1a1a;
+  color: white;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.container {
+  text-align: center;
+  padding: 20px;
+  max-width: 400px;
+  width: 100%;
+}
+&lt;/style&gt;</code></pre>
+
+          <h2 id="kode-lengkap"><span class="heading-icon">✅</span> Kode Lengkap Step 2</h2>
+          <p>Berikut kode lengkap yang sudah kita buat:</p>
+
+          <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="id"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+  &lt;title&gt;Link Bio Saya&lt;/title&gt;
+  &lt;style&gt;
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #1a1a1a;
+      color: white;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .container {
+      text-align: center;
+      padding: 20px;
+      max-width: 400px;
+      width: 100%;
+    }
+  &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;div class="container"&gt;
+    &lt;!-- Konten akan kita tambahkan di step selanjutnya --&gt;
+    &lt;p&gt;Hello World! 👋&lt;/p&gt;
+  &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+
+          <div class="highlight-box">
+            <p>Lanjut ke <a href="step-3.html"><strong>Step 3 - Avatar</strong></a> untuk menambahkan foto
+              profil!</p>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Right Sidebar (Table of Contents) -->
+    <aside class="toc-sidebar">
+      <div class="toc-title">On this page</div>
+      <nav id="toc-list" class="toc-list">
+        <!-- Generated by JavaScript -->
+      </nav>
+    </aside>
+  </div>
+
+  <script src="assets/js/main.js"></script>
+</body>
+
+</html>

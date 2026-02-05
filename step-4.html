@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Step 4 - Menambahkan Nama dan Deskripsi">
+    <title>Step 4 - Nama dan Deskripsi - Kelas Coding</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💻</text></svg>">
+</head>
+
+<body>
+    <!-- Mobile Header (shown on mobile only) -->
+    <header class="mobile-header">
+        <a href="index.html" class="mobile-header-logo">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="16,18 22,12 16,6"></polyline>
+                <polyline points="8,6 2,12 8,18"></polyline>
+            </svg>
+            <span>Kodein Project</span>
+        </a>
+        <div class="mobile-header-actions">
+            <button class="mobile-header-btn" aria-label="Search">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <path d="m21 21-4.35-4.35"></path>
+                </svg>
+            </button>
+            <button class="mobile-menu-toggle" aria-label="Toggle menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Sidebar Overlay -->
+    <div class="sidebar-overlay"></div>
+    <div class="layout">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <a href="index.html" class="sidebar-logo">
+                    <span class="sidebar-logo-icon">💻</span>
+                    <span>Kelas Coding</span>
+                </a>
+            </div>
+            <div class="sidebar-search">
+                <div class="search-box">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <path d="m21 21-4.35-4.35"></path>
+                    </svg>
+                    <span>Search</span><kbd>Ctrl K</kbd>
+                </div>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="index.html" class="nav-item">Selamat Datang</a>
+                <a href="step-1.html" class="nav-item">Step 1 - Persiapan</a>
+                <a href="step-2.html" class="nav-item">Step 2 - Struktur Dasar</a>
+                <a href="step-3.html" class="nav-item">Step 3 - Avatar</a>
+                <a href="step-4.html" class="nav-item active">Step 4 - Nama dan Deskripsi</a>
+                <a href="step-5.html" class="nav-item">Step 5 - Link Sosmed</a>
+                <a href="step-6.html" class="nav-item">Step 6 - Deploy</a>
+                <a href="penutup.html" class="nav-item">Penutup</a>
+            </nav>
+        </aside>
+        <main class="main-wrapper">
+            <div class="main-content">
+                <header class="page-header">
+                    <h1 class="page-title">Step 4 - Nama dan Deskripsi</h1>
+                    <p class="page-description">Menambahkan identitas diri ke website Link Bio</p>
+                </header>
+                <div class="content">
+                    <h2 id="tambah-nama"><span class="heading-icon">✏️</span> Menambahkan Nama</h2>
+                    <p>Gunakan tag <code>&lt;h1&gt;</code> untuk nama:</p>
+                    <pre><code>&lt;h1 class="name"&gt;Nama Kamu&lt;/h1&gt;</code></pre>
+                    <h3>CSS untuk Nama:</h3>
+                    <pre><code>.name {
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+}</code></pre>
+
+                    <h2 id="tambah-deskripsi"><span class="heading-icon">📝</span> Menambahkan Deskripsi</h2>
+                    <pre><code>&lt;p class="bio"&gt;Pelajar | Web Developer | Creator&lt;/p&gt;</code></pre>
+                    <pre><code>.bio {
+  font-size: 0.95rem;
+  color: #a0a0a0;
+  margin-bottom: 24px;
+}</code></pre>
+
+                    <h2 id="ide-bio"><span class="heading-icon">💡</span> Ide untuk Bio</h2>
+                    <ul>
+                        <li>"Siswa SMA | Suka Coding | Pemain Game"</li>
+                        <li>"YouTuber • Gamer • Streamer"</li>
+                        <li>"🎮 Gamer | 💻 Coder | 🎨 Designer"</li>
+                    </ul>
+
+                    <h2 id="styling-gradient"><span class="heading-icon">🎨</span> Nama dengan Gradient</h2>
+                    <pre><code>.name {
+  background: linear-gradient(90deg, #ff6b6b, #4ecdc4);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}</code></pre>
+
+                    <div class="highlight-box">
+                        <p>Lanjut ke <a href="step-5.html"><strong>Step 5 - Link Sosmed</strong></a>!</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <aside class="toc-sidebar">
+            <div class="toc-title">On this page</div>
+            <nav id="toc-list" class="toc-list"></nav>
+        </aside>
+    </div>
+    <script src="assets/js/main.js"></script>
+</body>
+
+</html>

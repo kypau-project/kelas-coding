@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Step 5 - Menambahkan Link Sosial Media">
+  <title>Step 5 - Link Sosmed - Kelas Coding</title>
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="icon"
+    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💻</text></svg>">
+</head>
+
+<body>
+  <!-- Mobile Header (shown on mobile only) -->
+  <header class="mobile-header">
+    <a href="index.html" class="mobile-header-logo">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <polyline points="16,18 22,12 16,6"></polyline>
+        <polyline points="8,6 2,12 8,18"></polyline>
+      </svg>
+      <span>Kodein Project</span>
+    </a>
+    <div class="mobile-header-actions">
+      <button class="mobile-header-btn" aria-label="Search">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="11" cy="11" r="8"></circle>
+          <path d="m21 21-4.35-4.35"></path>
+        </svg>
+      </button>
+      <button class="mobile-menu-toggle" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+  <div class="sidebar-overlay"></div>
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <a href="index.html" class="sidebar-logo">
+          <span class="sidebar-logo-icon">💻</span>
+          <span>Kelas Coding</span>
+        </a>
+      </div>
+      <div class="sidebar-search">
+        <div class="search-box">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"></circle>
+            <path d="m21 21-4.35-4.35"></path>
+          </svg>
+          <span>Search</span><kbd>Ctrl K</kbd>
+        </div>
+      </div>
+      <nav class="sidebar-nav">
+        <a href="index.html" class="nav-item">Selamat Datang</a>
+        <a href="step-1.html" class="nav-item">Step 1 - Persiapan</a>
+        <a href="step-2.html" class="nav-item">Step 2 - Struktur Dasar</a>
+        <a href="step-3.html" class="nav-item">Step 3 - Avatar</a>
+        <a href="step-4.html" class="nav-item">Step 4 - Nama dan Deskripsi</a>
+        <a href="step-5.html" class="nav-item active">Step 5 - Link Sosmed</a>
+        <a href="step-6.html" class="nav-item">Step 6 - Deploy</a>
+        <a href="penutup.html" class="nav-item">Penutup</a>
+      </nav>
+    </aside>
+    <main class="main-wrapper">
+      <div class="main-content">
+        <header class="page-header">
+          <h1 class="page-title">Step 5 - Link Sosmed</h1>
+          <p class="page-description">Menambahkan tombol link ke sosial media</p>
+        </header>
+        <div class="content">
+          <h2 id="membuat-link"><span class="heading-icon">🔗</span> Membuat Container Link</h2>
+          <p>Tambahkan kode ini untuk container link-link sosmed:</p>
+          <pre><code>&lt;div class="links"&gt;
+  &lt;a href="https://instagram.com/username" class="link-item"&gt;
+    📷 Instagram
+  &lt;/a&gt;
+  &lt;a href="https://twitter.com/username" class="link-item"&gt;
+    🐦 Twitter
+  &lt;/a&gt;
+  &lt;a href="https://github.com/username" class="link-item"&gt;
+    💻 GitHub
+  &lt;/a&gt;
+  &lt;a href="https://youtube.com/@channel" class="link-item"&gt;
+    🎬 YouTube
+  &lt;/a&gt;
+&lt;/div&gt;</code></pre>
+
+          <h2 id="styling-link"><span class="heading-icon">🎨</span> Styling Link</h2>
+          <pre><code>.links {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.link-item {
+  display: block;
+  padding: 14px 20px;
+  background-color: #2a2a2a;
+  border-radius: 12px;
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.link-item:hover {
+  background-color: #3a3a3a;
+  transform: translateY(-2px);
+}</code></pre>
+
+          <h2 id="variasi-style"><span class="heading-icon">✨</span> Variasi Style</h2>
+
+          <h3>Link dengan Border:</h3>
+          <pre><code>.link-item {
+  background: transparent;
+  border: 2px solid #444;
+}
+
+.link-item:hover {
+  border-color: #d4a853;
+  background-color: rgba(212, 168, 83, 0.1);
+}</code></pre>
+
+          <h3>Link dengan Gradient:</h3>
+          <pre><code>.link-item:hover {
+  background: linear-gradient(90deg, #ff6b6b, #4ecdc4);
+}</code></pre>
+
+          <h2 id="icon-svg"><span class="heading-icon">🎯</span> Menggunakan Icon SVG</h2>
+          <p>Untuk icon yang lebih profesional, gunakan SVG:</p>
+          <pre><code>&lt;a href="#" class="link-item"&gt;
+  &lt;svg width="20" height="20" viewBox="0 0 24 24"&gt;...&lt;/svg&gt;
+  &lt;span&gt;Instagram&lt;/span&gt;
+&lt;/a&gt;</code></pre>
+
+          <div class="highlight-box">
+            <p>Link sudah siap! Lanjut ke <a href="step-6.html"><strong>Step 6 - Deploy</strong></a> untuk
+              mempublikasikan!</p>
+          </div>
+        </div>
+      </div>
+    </main>
+    <aside class="toc-sidebar">
+      <div class="toc-title">On this page</div>
+      <nav id="toc-list" class="toc-list"></nav>
+    </aside>
+  </div>
+  <script src="assets/js/main.js"></script>
+</body>
+
+</html>

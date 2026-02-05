@@ -13,6 +13,35 @@
   const IS_SERVER_MODE = window.location.protocol !== 'file:';
 
   // ========================================
+  // IMMEDIATE: Hide content in server mode to prevent flash
+  // This runs BEFORE DOMContentLoaded
+  // ========================================
+  if (IS_SERVER_MODE) {
+    // Add server-mode class to body as soon as possible
+    document.documentElement.classList.add('server-mode-pending');
+
+    // Use MutationObserver to add class as soon as body and content exist
+    const observer = new MutationObserver(function (mutations, obs) {
+      const content = document.querySelector('.content');
+      if (content) {
+        document.body.classList.add('server-mode');
+        content.classList.add('hide-until-loaded');
+        obs.disconnect();
+      }
+    });
+
+    if (document.body) {
+      const content = document.querySelector('.content');
+      if (content) {
+        document.body.classList.add('server-mode');
+        content.classList.add('hide-until-loaded');
+      }
+    } else {
+      observer.observe(document.documentElement, { childList: true, subtree: true });
+    }
+  }
+
+  // ========================================
   // Table of Contents Generator
   // ========================================
   function generateTableOfContents() {
@@ -440,23 +469,17 @@
   // Dynamic Content Loading
   // ========================================
   async function loadDynamicContent() {
-    if (!IS_SERVER_MODE) return;
-
     const content = document.querySelector('.content');
     if (!content) return;
 
+    // If not in server mode, just enhance code blocks and return
+    if (!IS_SERVER_MODE) {
+      content.classList.remove('hide-until-loaded');
+      return;
+    }
+
     const currentPath = window.location.pathname.split('/').pop() || 'index.html';
     const pageName = currentPath.replace('.html', '') || 'index';
-
-    // Show loading state immediately to prevent flash of old content
-    const originalContent = content.innerHTML;
-    content.innerHTML = `
-      <div class="loading-state">
-        <div class="loading-spinner"></div>
-        <p>Memuat konten...</p>
-      </div>
-    `;
-    content.style.opacity = '1';
 
     try {
       const response = await fetch(`${API_BASE}/content/${pageName}`);
@@ -464,18 +487,22 @@
 
       if (data.success && data.html) {
         content.innerHTML = data.html;
+        content.style.visibility = 'visible';
+        content.classList.remove('hide-until-loaded');
         generateTableOfContents();
         initScrollSpy();
         enhanceCodeBlocks();
       } else {
-        // If no dynamic content, restore original
-        content.innerHTML = originalContent;
+        // If no dynamic content, show original
+        content.style.visibility = 'visible';
+        content.classList.remove('hide-until-loaded');
         enhanceCodeBlocks();
       }
     } catch (error) {
-      // Running in static mode, restore original content
+      // Running in static mode, show original content
       console.log('Running in static mode, using embedded content');
-      content.innerHTML = originalContent;
+      content.style.visibility = 'visible';
+      content.classList.remove('hide-until-loaded');
       enhanceCodeBlocks();
     }
   }
@@ -484,14 +511,21 @@
   // Initialize
   // ========================================
   document.addEventListener('DOMContentLoaded', function () {
-    generateTableOfContents();
-    initScrollSpy();
-    initMobileMenu();
-    setActiveNavItem();
-    createMobileBreadcrumb();
-    enhanceCodeBlocks();
-    initSearch();
-    loadDynamicContent();
+    // Load dynamic content first (this will handle TOC, scroll spy, code blocks)
+    loadDynamicContent().then(() => {
+      // These don't depend on content, so init them regardless
+      initMobileMenu();
+      setActiveNavItem();
+      createMobileBreadcrumb();
+      initSearch();
+    });
+
+    // Only generate TOC if not in server mode (server mode does it after content loads)
+    if (!IS_SERVER_MODE) {
+      generateTableOfContents();
+      initScrollSpy();
+      enhanceCodeBlocks();
+    }
 
     window.addEventListener('resize', createMobileBreadcrumb);
   });

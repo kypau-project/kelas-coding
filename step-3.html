@@ -9,6 +9,13 @@
   <link rel="stylesheet" href="assets/css/style.css">
   <link rel="icon"
     href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💻</text></svg>">
+  <!-- Prevent flash of old content in server mode -->
+  <script>
+    if (location.protocol !== 'file:') {
+      document.documentElement.classList.add('server-mode');
+      document.write('<style>.content{visibility:hidden;min-height:300px}.content::before{content:"";visibility:visible;display:block;width:40px;height:40px;border:3px solid #2a2a2a;border-top-color:#d4a853;border-radius:50%;animation:spin .8s linear infinite;margin:60px auto}@keyframes spin{to{transform:rotate(360deg)}}</style>');
+    }
+  </script>
 </head>
 
 <body>

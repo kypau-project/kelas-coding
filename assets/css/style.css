@@ -47,6 +47,25 @@
   --radius-lg: 12px;
 }
 
+/* Hide content until loaded - prevents content flash in server mode */
+body.server-mode .content.hide-until-loaded {
+  visibility: hidden;
+  min-height: 200px;
+}
+
+body.server-mode .content.hide-until-loaded::before {
+  content: '';
+  visibility: visible;
+  display: block;
+  width: 40px;
+  height: 40px;
+  border: 3px solid var(--border-color);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  margin: 60px auto;
+}
+
 /* ========================================
    Reset & Base
    ======================================== */

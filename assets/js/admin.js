@@ -369,13 +369,40 @@
         elements.logoutBtn.addEventListener('click', logout);
 
         // Toolbar buttons
+        // Toolbar buttons
         elements.toolbarBtns.forEach(btn => {
             btn.addEventListener('click', function () {
                 const text = this.getAttribute('data-insert');
-                const wrap = this.getAttribute('data-wrap') === 'true';
-                insertText(text, wrap);
+                if (text) {
+                    const wrap = this.getAttribute('data-wrap') === 'true';
+                    insertText(text, wrap);
+                }
             });
         });
+
+        // Image upload button
+        const imageBtn = document.getElementById('image-btn');
+        if (imageBtn) {
+            imageBtn.addEventListener('click', async () => {
+                const input = document.createElement('input');
+                input.type = 'file';
+                input.accept = 'image/*';
+                input.onchange = async (e) => {
+                    const file = e.target.files[0];
+                    if (!file) return;
+
+                    // Upload logic here (converting to base64 for now to be simple and consistent with current markdown storage)
+                    const reader = new FileReader();
+                    reader.onload = function (evt) {
+                        const base64 = evt.target.result;
+                        const markdownImage = `![${file.name}](${base64})`;
+                        insertText(markdownImage, false);
+                    };
+                    reader.readAsDataURL(file);
+                };
+                input.click();
+            });
+        }
 
         // Preview button - open current page in new tab
         const previewBtn = document.getElementById('preview-page-btn');
